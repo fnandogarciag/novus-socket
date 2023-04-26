@@ -5,7 +5,7 @@ const path = require("path");
 const app = express();
 const server = http.createServer(app);
 
-require("./initialSetUp")();
+// require("./initialSetUp")();
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("./public/index.html"));
 });
