@@ -1,8 +1,8 @@
-import sequelize from "./db/sequelize";
-import User from "./models/user.model";
-import Role from "./models/role.model";
-import Company from "./models/company.model";
-import History from "./models/history.model";
+const sequelize = require("./db/sequelize");
+const User = require("./models/user.model");
+const Role = require("./models/role.model");
+const Company = require("./models/company.model");
+const History = require("./models/history.model");
 
 const companies = ["Novus", "GoPass", "AVVillas"];
 const roles = ["ADMIN", "DRIVER"];

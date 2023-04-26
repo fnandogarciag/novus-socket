@@ -1,4 +1,4 @@
-import { Server } from "socket.io";
+const { Server } = require("socket.io");
 
 const createSocket = (server, app) => {
   const io = new Server(server);

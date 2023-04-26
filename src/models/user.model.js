@@ -1,7 +1,7 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../db/sequelize";
-import Role from "./role.model";
-import Company from "./company.model";
+const { DataTypes } = require("sequelize");
+const sequelize = require("../db/sequelize");
+const Role = require("./role.model");
+const Company = require("./company.model");
 
 const User = sequelize.define("users", {
   id: {

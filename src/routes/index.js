@@ -1,7 +1,7 @@
-import express from "express";
+const express = require("express");
 
-import historyRouter from "./history.routes";
-// import socketRouter from "./socket.routes";
+const historyRouter = require("./history.routes");
+// const socketRouter = require("./socket.routes");
 
 const routerApi = (app) => {
   const router = express.Router();

@@ -1,6 +1,6 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../db/sequelize";
-import User from "./user.model";
+const { DataTypes } = require("sequelize");
+const sequelize = require("../db/sequelize");
+const User = require("./user.model");
 
 const History = sequelize.define("histories", {
   id: {

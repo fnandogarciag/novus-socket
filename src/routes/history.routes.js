@@ -1,5 +1,5 @@
-import express from "express";
-import History from "../models/history.model";
+const express = require("express");
+const History = require("../models/history.model");
 
 const router = express.Router();
 

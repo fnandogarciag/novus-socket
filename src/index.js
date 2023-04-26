@@ -1,22 +1,19 @@
-import express from "express";
-import http from "http";
-import path from "path";
+const express = require("express");
+const http = require("http");
+const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
 
-// import initialSetUp from "./initialSetUp";
-// initialSetUp();
+require("./initialSetUp")();
 app.get("/", (req, res) => {
   res.sendFile(path.resolve("./public/index.html"));
 });
 
-import socket from "./socket";
-socket(server, app);
-import routes from "./routes";
-routes(app);
+require("./socket")(server, app);
+require("./routes")(app);
 
-import { port } from "./config";
+const { port } = require("./config");
 const PORT = port || 3000;
 server.listen(PORT, () => {
   console.log("listening on *:" + PORT);
