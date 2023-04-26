@@ -6,7 +6,7 @@
   "scripts": {
     "build": "babel ./src --out-dir build",
     "start": "node ./src/index.js",
-    "dev": "nodemon ./src/index.js --exec babel-node",
+    "dev": "nodemon ./src/index.js",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
