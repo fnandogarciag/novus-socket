@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Map</title>
     <style>
       .container {
         display: flex;
       }
       #map {
-        height: 98vh;
+        height: 95vh;
         width: 78vw;
       }
+      #company {
+        text-align: center;
+      }
       #messages {
-        height: 90vh;
+        height: 85vh;
         width: 18vw;
+        overflow-y: auto;
       }
     </style>
     <link
@@ -30,29 +34,36 @@
   <body>
     <div class="container">
       <div id="map"></div>
-      <ul id="messages"></ul>
+      <div>
+        <h2 id="company"></h2>
+        <ul id="messages"></ul>
+      </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      const messages = document.getElementById("messages");
+      const companyName = prompt("Escriba la compañia");
+      const messages = document.querySelector("#messages");
       const map = L.map("map").setView([4.675, -74.057], 17);
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map);
-      const socket = io();
-
+      const socket = io("http://localhost:3000", {
+        query: {
+          company: companyName,
+          admin: true
+        }
+      });
+      socket.on("connect", () => {
+        const company = document.querySelector("#company");
+        company.textContent = companyName;
+      });
       socket.on("r_location", function (msg) {
-        const now = new Date();
-        const time =
-          now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
-        const message = `X: ${msg.xpos} Y: ${msg.ypos} Time: ${time}`;
-        console.log(message);
+        const message = `X: ${msg.xpos} Y: ${msg.ypos} Time: ${msg.time}`;
         const item = document.createElement("li");
         item.textContent = message;
         messages.appendChild(item);
         messages.scrollTo(0, messages.scrollHeight);
-        const marker = L.marker([msg.xpos, msg.ypos]).addTo(map);
+        const marker = L.marker([msg.ypos, msg.xpos]).addTo(map);
         marker.bindPopup(message);
       });
     </script>
