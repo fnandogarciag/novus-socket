@@ -1,13 +1,14 @@
 import express from "express";
 import http from "http";
+import path from "path";
 
 const app = express();
 const server = http.createServer(app);
 
-import initialSetUp from "./initialSetUp";
-initialSetUp();
+// import initialSetUp from "./initialSetUp";
+// initialSetUp();
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
+  res.sendFile(path.resolve("./public/index.html"));
 });
 
 import socket from "./socket";
