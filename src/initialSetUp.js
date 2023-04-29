@@ -1,22 +1,6 @@
-const sequelize = require("./db/sequelize");
-const User = require("./models/user.model");
-const Role = require("./models/role.model");
-const Company = require("./models/company.model");
-const History = require("./models/history.model");
-
-const companies = ["Novus", "GoPass", "AVVillas"];
-const roles = ["ADMIN", "DRIVER"];
-
-const createCompanies = async () => {
-  try {
-    const companiesToCreate = companies.map((company) => ({ name: company }));
-    await Company.bulkCreate(companiesToCreate);
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 const createRoles = async () => {
+  const Role = require("./models/role.model");
+  const roles = ["ADMIN", "DRIVER"];
   try {
     const rolesToCreate = roles.map((role) => ({ name: role }));
     await Role.bulkCreate(rolesToCreate);
@@ -26,19 +10,19 @@ const createRoles = async () => {
 };
 
 const createUsers = async () => {
+  const User = require("./models/user.model");
   try {
     const usersToCreate = [];
-    companies.forEach((company, cindex) => {
-      roles.forEach((role, rindex) => {
-        for (let i = 0; i < rindex + 1; i++) {
-          usersToCreate.push({
-            name: `${company}${role}${i}`,
-            roleId: rindex + 1,
-            companyId: cindex + 1
-          });
-        }
-      });
+    usersToCreate.push({
+      name: "admin",
+      roleId: 1
     });
+    for (let i = 1; i <= 49; i++) {
+      usersToCreate.push({
+        name: `driver${i}`,
+        roleId: 2
+      });
+    }
     await User.bulkCreate(usersToCreate);
   } catch (error) {
     console.log(error);
@@ -46,14 +30,15 @@ const createUsers = async () => {
 };
 
 const createHistories = async () => {
+  const History = require("./models/history.model");
   try {
     const historiesToCreate = [];
-    for (let index = 1; index <= 9; index++) {
+    for (let index = 1; index <= 10; index++) {
       if (index % 3 !== 1) {
         historiesToCreate.push({
-          xPos: (-740570 - index) / 10000,
-          yPos: (46750 + index) / 10000,
-          userId: index
+          xPos: (-740570 - index * index) / 10000,
+          yPos: (46750 + index * index) / 10000,
+          userId: 5
         });
       }
     }
@@ -65,9 +50,9 @@ const createHistories = async () => {
 
 const initApp_Db = async () => {
   console.log("Entro el initial");
+  const sequelize = require("./db/sequelize");
   try {
     await sequelize.sync({ force: true });
-    await createCompanies();
     await createRoles();
     await createUsers();
     await createHistories();

@@ -1,7 +1,7 @@
 /**
  * Esta función establece una relación de uno a uno entre dos modelos
  */
-export const relationOneToOne = ({ first, second, foreignKey }) => {
+const relationOneToOne = ({ first, second, foreignKey }) => {
   first.hasOne(second, {
     foreignKey: foreignKey,
     sourceKey: "id"
@@ -15,7 +15,7 @@ export const relationOneToOne = ({ first, second, foreignKey }) => {
 /**
  * This function establishes a one-to-many relationship between two models
  */
-export const relationOneToMany = ({ One, ToMany, foreignKey }) => {
+const relationOneToMany = ({ One, ToMany, foreignKey }) => {
   try {
     One.hasMany(ToMany, {
       foreignKey,
@@ -30,7 +30,7 @@ export const relationOneToMany = ({ One, ToMany, foreignKey }) => {
 /**
  * Esta función establece una relación de muchos a muchos entre dos modelos
  */
-export const relationManyToMany = ({ first, second, table, firstForeignKey, secondForeignKey }) => {
+const relationManyToMany = ({ first, second, table, firstForeignKey, secondForeignKey }) => {
   first.belongsToMany(second, {
     through: table,
     foreignKey: firstForeignKey,
@@ -41,4 +41,9 @@ export const relationManyToMany = ({ first, second, table, firstForeignKey, seco
     foreignKey: secondForeignKey,
     otherKey: firstForeignKey
   });
+};
+module.exports = {
+  relationOneToOne,
+  relationOneToMany,
+  relationManyToMany
 };

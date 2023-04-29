@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+      integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+      crossorigin=""
+    ></script>
+    <title>Admin Map</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="map"></div>
+      <div>
+        <h2 id="company">Novus</h2>
+        <select id="zone">
+          <option value="0">All</option>
+          <option value="1">Right</option>
+          <option value="2">Left</option>
+        </select>
+        <select id="users">
+          <option value="0">All</option>
+        </select>
+        <ul id="messages"></ul>
+      </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const users = document.querySelector("#users");
+    </script>
+  </body>
+</html>

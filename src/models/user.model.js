@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../db/sequelize");
+const { relationOneToMany } = require("./_index");
 const Role = require("./role.model");
-const Company = require("./company.model");
 
 const User = sequelize.define("users", {
   id: {
@@ -12,10 +12,6 @@ const User = sequelize.define("users", {
   name: DataTypes.STRING
 });
 
-Role.belongsToMany(User, { through: "ActorMovies" });
-User.belongsToMany(Role, { through: "ActorMovies" });
-
-Company.belongsToMany(User, { through: "ActorMovies" });
-User.belongsToMany(Company, { through: "ActorMovies" });
+relationOneToMany({ One: Role, ToMany: User, foreignKey: "roleId" });
 
 module.exports = User;
