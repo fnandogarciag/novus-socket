@@ -1,26 +1,39 @@
+import sequelize from "./db/sequelize.js";
+import Perfil from "./models/perfil.model.js";
+import User from "./models/usuario.model.js";
+import Georeferencia from "./models/georeferencia.model.js";
+import Solicitud from "./models/solicitud.model.js";
+
+const coordenadaRandom = (initial, number) => {
+  return (initial * 10000 + Math.floor(Math.random() * number * 2) - number) / 10000;
+};
+
 const createRoles = async () => {
-  const Role = require("./models/role.model");
   const roles = ["ADMIN", "DRIVER"];
   try {
-    const rolesToCreate = roles.map((role) => ({ name: role }));
-    await Role.bulkCreate(rolesToCreate);
+    const rolesToCreate = roles.map((role) => ({
+      nombrePerfil: role,
+      descripcionPerfil: "",
+      estado: 1
+    }));
+    await Perfil.bulkCreate(rolesToCreate);
   } catch (error) {
     console.error(error);
   }
 };
-
 const createUsers = async () => {
-  const User = require("./models/user.model");
   try {
     const usersToCreate = [];
     usersToCreate.push({
-      name: "admin",
-      roleId: 1
+      nameUsuario: "admin",
+      roleId: 1,
+      estado: 1
     });
     for (let i = 1; i <= 49; i++) {
       usersToCreate.push({
-        name: `driver${i}`,
-        roleId: 2
+        nameUsuario: `driver${i}`,
+        roleId: 2,
+        estado: 1
       });
     }
     await User.bulkCreate(usersToCreate);
@@ -29,36 +42,55 @@ const createUsers = async () => {
   }
 };
 
-const createHistories = async () => {
-  const History = require("./models/history.model");
+const createGeoReferencia = async () => {
   try {
-    const historiesToCreate = [];
-    for (let index = 1; index <= 10; index++) {
-      if (index % 3 !== 1) {
-        historiesToCreate.push({
-          xPos: (-740570 - index * index) / 10000,
-          yPos: (46750 + index * index) / 10000,
-          userId: 5
+    const users = await User.findAll();
+    const georeferenciaToCreate = [];
+    users.forEach((user) => {
+      georeferenciaToCreate.push({
+        userId: user.id,
+        latRef: coordenadaRandom(4.675, 30),
+        longRef: coordenadaRandom(-74.059, 30),
+        coordenadasRef: "Mi casa",
+        fechaRegistro: new Date()
+      });
+    });
+    await Georeferencia.bulkCreate(georeferenciaToCreate);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const createSolicitud = async () => {
+  try {
+    const users = await User.findAll();
+    const solicitudToCreate = [];
+    users.forEach((user) => {
+      for (let index = 0; index < 10; index++) {
+        solicitudToCreate.push({
+          dirRecoleccion: `${coordenadaRandom(4.675, 100)},${coordenadaRandom(-74.059, 100)}`,
+          dirEntrega: `${coordenadaRandom(4.675, 100)},${coordenadaRandom(-74.059, 100)}`,
+          userId: user.id
         });
       }
-    }
-    await History.bulkCreate(historiesToCreate);
+    });
+    await Solicitud.bulkCreate(solicitudToCreate);
   } catch (error) {
     console.log(error);
   }
 };
 
 const initApp_Db = async () => {
-  console.log("Entro el initial");
-  const sequelize = require("./db/sequelize");
   try {
     await sequelize.sync({ force: true });
-    await createRoles();
-    await createUsers();
-    await createHistories();
+    createRoles();
+    createUsers();
+    createGeoReferencia();
+    createSolicitud();
+    console.log("Entro el initial");
   } catch (error) {
     console.log("connection error", error);
   }
 };
 
-module.exports = initApp_Db;
+export default initApp_Db;

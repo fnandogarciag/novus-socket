@@ -1,13 +1,27 @@
-module.exports = (server) => {
-  const { Server } = require("socket.io");
+import { Server } from "socket.io";
 
+import preMiddlewares from "./preMiddlewares.js";
+import eventReceiveDriver from "./eventReceiveDriver.js";
+
+const initSocket = (server) => {
   const io = new Server(server, {
     cors: {
       origin: "*"
     }
   });
 
-  require("./addSocketMiddlewares")(io);
+  io.use(preMiddlewares);
 
-  require("./startDefaultNamespace")(io);
+  const onConnection = (socket) => {
+    socket.join(socket.handshake.query.id === "1" ? "admin" : "driver");
+    eventReceiveDriver(io, socket);
+
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+    });
+  };
+
+  io.on("connection", onConnection);
 };
+
+export default initSocket;

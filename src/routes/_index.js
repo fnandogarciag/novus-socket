@@ -1,17 +1,11 @@
-module.exports = (app) => {
-  const express = require("express");
-  const path = require("path");
+import { Router } from "express";
 
-  const router = express.Router();
+import mapRouter from "./map.routes.js";
 
-  const views = path.join(__dirname, "../views");
-
-  app.get("/", (req, res) => {
-    res.sendFile(views + "/index.html");
-  });
-
+function routerApi(app) {
+  const router = Router();
   app.use("/api/v1", router);
+  router.use("/map", mapRouter);
+}
 
-  const historyRouter = require("./history.routes");
-  router.use("/history", historyRouter);
-};
+export default routerApi;
