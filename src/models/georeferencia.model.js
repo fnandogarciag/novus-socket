@@ -1,27 +1,27 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../db/sequelize.js";
+import { DataTypes } from 'sequelize';
+import sequelize from '../db/sequelize.js';
 
-import User from "./usuario.model.js";
-import { relationOneToMany } from "./_index.js";
+import User from './usuario.model.js';
+import { relationOneToMany } from './_index.js';
 
 const Georeferencia = sequelize.define(
-  "georeferencias",
+  'georeferencias',
   {
     id: {
       type: DataTypes.BIGINT,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
-    latRef: DataTypes.DOUBLE,
-    longRef: DataTypes.DOUBLE,
+    lat: DataTypes.DOUBLE,
+    lng: DataTypes.DOUBLE,
     coordenadasRef: DataTypes.STRING,
-    fechaRegistro: DataTypes.DATE
+    fechaRegistro: DataTypes.DATE,
   },
   {
-    tableName: "georeferencias"
+    tableName: 'georeferencias',
   }
 );
 
-relationOneToMany({ One: User, ToMany: Georeferencia, foreignKey: "userId" });
+relationOneToMany({ One: User, ToMany: Georeferencia, foreignKey: 'userId' });
 
 export default Georeferencia;

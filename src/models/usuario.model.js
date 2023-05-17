@@ -1,24 +1,24 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../db/sequelize.js";
-import { relationOneToMany } from "./_index.js";
-import Perfil from "./perfil.model.js";
+import { DataTypes } from 'sequelize';
+import sequelize from '../db/sequelize.js';
+import { relationOneToMany } from './_index.js';
+import Perfil from './perfil.model.js';
 
 const Usuario = sequelize.define(
-  "usuarios",
+  'usuarios',
   {
     id: {
       type: DataTypes.BIGINT,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     nameUsuario: DataTypes.STRING,
-    estado: DataTypes.BOOLEAN
+    estado: DataTypes.BOOLEAN,
   },
   {
-    tableName: "usuarios"
+    tableName: 'usuarios',
   }
 );
 
-relationOneToMany({ One: Perfil, ToMany: Usuario, foreignKey: "roleId" });
+relationOneToMany({ One: Perfil, ToMany: Usuario, foreignKey: 'roleId' });
 
 export default Usuario;

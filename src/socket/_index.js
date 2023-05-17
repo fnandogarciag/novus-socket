@@ -1,27 +1,27 @@
-import { Server } from "socket.io";
+import { Server } from 'socket.io';
 
-import preMiddlewares from "./preMiddlewares.js";
-import eventReceiveDriver from "./eventReceiveDriver.js";
+import preMiddlewares from './preMiddlewares.js';
+import eventReceiveDriver from './eventReceiveDriver.js';
 
 const initSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: "*"
-    }
+      origin: '*',
+    },
   });
 
   io.use(preMiddlewares);
 
   const onConnection = (socket) => {
-    socket.join(socket.handshake.query.id === "1" ? "admin" : "driver");
+    socket.join(socket.handshake.query.id === '1' ? 'admin' : 'driver');
     eventReceiveDriver(io, socket);
 
-    socket.on("disconnect", () => {
-      console.log("user disconnected");
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
     });
   };
 
-  io.on("connection", onConnection);
+  io.on('connection', onConnection);
 };
 
 export default initSocket;

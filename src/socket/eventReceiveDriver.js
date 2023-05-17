@@ -1,6 +1,6 @@
-import EVENTS from "./events.js";
+import EVENTS from './events.js';
 
-import Georeferencia from "../models/georeferencia.model.js";
+import Georeferencia from '../models/georeferencia.model.js';
 
 const middlewareReceiveDriver = (socket) => {
   socket.use((data, next) => {
@@ -17,12 +17,12 @@ const eventReceiveDriver = (io, socket) => {
         longRef: data.long,
         coordenadasRef: data.description,
         fechaRegistro: data.time,
-        userId: socket.data.id
+        userId: socket.data.id,
       });
-      io.in("admin").emit(EVENTS.SENDTOADMIN, {
+      io.in('admin').emit(EVENTS.SENDTOADMIN, {
         id: socket.data.id,
         nameUsuario: socket.data.nameUsuario,
-        ...geo.dataValues
+        ...geo.dataValues,
       });
     } catch (error) {
       console.log(error);

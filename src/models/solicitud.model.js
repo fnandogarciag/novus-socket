@@ -1,25 +1,25 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../db/sequelize.js";
+import { DataTypes } from 'sequelize';
+import sequelize from '../db/sequelize.js';
 
-import User from "./usuario.model.js";
-import { relationOneToMany } from "./_index.js";
+import User from './usuario.model.js';
+import { relationOneToMany } from './_index.js';
 
 const Solicitud = sequelize.define(
-  "solicitudes",
+  'solicitudes',
   {
     id: {
       type: DataTypes.BIGINT,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     dirRecoleccion: DataTypes.STRING,
-    dirEntrega: DataTypes.STRING
+    dirEntrega: DataTypes.STRING,
   },
   {
-    tableName: "solicitudes"
+    tableName: 'solicitudes',
   }
 );
 
-relationOneToMany({ One: User, ToMany: Solicitud, foreignKey: "userId" });
+relationOneToMany({ One: User, ToMany: Solicitud, foreignKey: 'userId' });
 
 export default Solicitud;

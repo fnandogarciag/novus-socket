@@ -5,16 +5,16 @@ const relationOneToOne = ({ first, second, foreignKey }) => {
   first.hasOne(second, {
     foreignKey: {
       name: foreignKey,
-      allowNull: false
+      allowNull: false,
     },
-    sourceKey: "id"
+    sourceKey: 'id',
   });
   second.belongsTo(first, {
     foreignKey: {
       name: foreignKey,
-      allowNull: false
+      allowNull: false,
     },
-    targetKey: "id"
+    targetKey: 'id',
   });
 };
 
@@ -28,32 +28,38 @@ const relationOneToMany = ({ One, ToMany, foreignKey }) => {
   One.hasMany(ToMany, {
     foreignKey: {
       name: foreignKey,
-      allowNull: false
+      allowNull: false,
     },
-    sourceKey: "id"
+    sourceKey: 'id',
   });
   ToMany.belongsTo(One, {
     foreignKey: {
       name: foreignKey,
-      allowNull: false
+      allowNull: false,
     },
-    targetKey: "id"
+    targetKey: 'id',
   });
 };
 
 /**
  * Esta función establece una relación de muchos a muchos entre dos modelos
  */
-const relationManyToMany = ({ first, second, table, firstForeignKey, secondForeignKey }) => {
+const relationManyToMany = ({
+  first,
+  second,
+  table,
+  firstForeignKey,
+  secondForeignKey,
+}) => {
   first.belongsToMany(second, {
     through: table,
     foreignKey: firstForeignKey,
-    otherKey: secondForeignKey
+    otherKey: secondForeignKey,
   });
   second.belongsToMany(first, {
     through: table,
     foreignKey: secondForeignKey,
-    otherKey: firstForeignKey
+    otherKey: firstForeignKey,
   });
 };
 export { relationOneToOne, relationOneToMany, relationManyToMany };

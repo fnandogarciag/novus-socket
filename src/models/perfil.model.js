@@ -1,20 +1,20 @@
-import { DataTypes } from "sequelize";
-import sequelize from "../db/sequelize.js";
+import { DataTypes } from 'sequelize';
+import sequelize from '../db/sequelize.js';
 
 const Perfil = sequelize.define(
-  "Perfiles",
+  'Perfiles',
   {
     id: {
       type: DataTypes.BIGINT,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     nombrePerfil: DataTypes.STRING,
     descripcionPerfil: DataTypes.STRING,
-    estado: DataTypes.BOOLEAN
+    estado: DataTypes.BOOLEAN,
   },
   {
-    tableName: "Perfiles"
+    tableName: 'Perfiles',
   }
 );
 
